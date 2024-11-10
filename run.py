@@ -91,24 +91,25 @@ async def run() -> None:
         "export_stats": (config.accounts_to_farm, process_export_stats),
     }
 
-    while True:
-        Console().build()
+    await farm_continuously(config.accounts_to_farm)
+    # while True:
+    #     Console().build()
 
-        if config.module not in module_map:
-            logger.error(f"Unknown module: {config.module}")
-            break
+    #     if config.module not in module_map:
+    #         logger.error(f"Unknown module: {config.module}")
+    #         break
 
-        accounts, process_func = module_map[config.module]
+    #     accounts, process_func = module_map[config.module]
 
-        if not accounts:
-            logger.error(f"No accounts for {config.module}")
-            break
+    #     if not accounts:
+    #         logger.error(f"No accounts for {config.module}")
+    #         break
 
-        if config.module == "farm":
-            await process_func(accounts)
-        else:
-            await run_module(accounts, process_func)
-            input("\n\nPress Enter to continue...")
+    #     if config.module == "farm":
+    #         await process_func(accounts)
+    #     else:
+    #         await run_module(accounts, process_func)
+    #         input("\n\nPress Enter to continue...")
 
 
 if __name__ == "__main__":
